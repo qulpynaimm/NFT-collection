@@ -177,9 +177,6 @@ export default function Home() {
           </div>
           {renderButton()}
         </div>
-        <div>
-          <img className={styles.image} src="./LW3punks/1.png" />
-        </div>
       </div>
 
     </div>
