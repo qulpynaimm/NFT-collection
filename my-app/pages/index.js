@@ -26,7 +26,7 @@ export default function Home() {
       // Create a new instance of the Contract with a Signer, which allows
       // update methods
       const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
-      // call the mint from the contract to mint the LW3Punks
+      // call the mint from the contract to mint the IT2004
       const tx = await nftContract.mint({
         // value signifies the cost of one LW3Punks which is "0.01" eth.
         // We are parsing `0.01` string to ether using the utils library from ethers.js
@@ -36,7 +36,7 @@ export default function Home() {
       // wait for the transaction to get mined
       await tx.wait();
       setLoading(false);
-      window.alert("You successfully minted a LW3Punk!");
+      window.alert("You successfully minted an NFT from IT2004 collection!");
     } catch (err) {
       console.error(err);
     }
@@ -154,26 +154,26 @@ export default function Home() {
 
     return (
       <button className={styles.button} onClick={publicMint}>
-        Public Mint 🚀
+        Get an NFT.
       </button>
     );
   };
-
+ 
   return (
     <div>
       <Head>
-        <title>LW3Punks</title>
+        <title>NFT minting</title>
         <meta name="description" content="LW3Punks-Dapp" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.main}>
         <div>
-          <h1 className={styles.title}>Welcome to LW3Punks!</h1>
+          <h1 className={styles.title}>Welcome to NFT minting website!</h1>
           <div className={styles.description}>
-            Its an NFT collection for LearnWeb3 students.
+            {/* Using HTML Entities for the apostrophe */}
+            It&#39;s an NFT collection for IT-2004 students.
           </div>
           <div className={styles.description}>
-            {tokenIdsMinted}/10 have been minted
+            {tokenIdsMinted}/20 have been minted
           </div>
           {renderButton()}
         </div>
@@ -182,7 +182,6 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className={styles.footer}>Made with &#10084; by LW3Punks</footer>
     </div>
   );
 }
