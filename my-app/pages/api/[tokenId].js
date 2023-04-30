@@ -11,6 +11,6 @@ export default function handler(req, res) {
     res.status(200).json({
       name: "it2004 #" + tokenId,
       description: "it2004 is a collection for diploma work that was developed for students of it2004 group.",
-      image: image_url + tokenId + ".svg",
+      image: image_url + tokenId + ".png",
     });
   }
