@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config({ path: ".env" });
 
-const GANACHE_HTTP_URL = "http://localhost:8545";
+const GANACHE_HTTP_URL = "http://localhost:7545";
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
 module.exports = {
