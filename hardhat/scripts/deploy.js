@@ -2,11 +2,11 @@ const { ethers } = require("hardhat");
 require("dotenv").config({ path: ".env" });
 
 async function main() {
-  // URL from where we can extract the metadata for a LW3Punks
-  const metadataURL = "ipfs://YOUR-METADATA-CID";
+  // URL from where we can extract the metadata for a IT2004
+  const metadataURL = "ipfs://QmcdPcbNvra37pxFU8Ra2e1LiXHdJbGR8dMvmH3igLvV2f";
   /*
   A ContractFactory in ethers.js is an abstraction used to deploy new smart contracts,
-  so lw3PunksContract here is a factory for instances of our LW3Punks contract.
+  so it2004 contract here is a factory for instances of our it2004 contract.
   */
   const it2004Contract = await ethers.getContractFactory("it2004");
 

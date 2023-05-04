@@ -20,7 +20,7 @@ contract it2004 is ERC721Enumerable, Ownable {
     bool public _paused;
 
     // max number of IT2004
-    uint256 public maxTokenIds = 10;
+    uint256 public maxTokenIds = 20;
 
     // total number of tokenIds minted
     uint256 public tokenIds;
