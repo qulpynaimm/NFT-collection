@@ -12,11 +12,15 @@ async function main() {
 
   // deploy the contract
   const deployedit2004Contract = await it2004Contract.deploy(metadataURL);
+  
+
 
   await deployedit2004Contract.deployed();
 
   // print the address of the deployed contract
   console.log("it2004 Contract Address:", deployedit2004Contract.address);
+
+  console.log("metadata", deployedit2004Contract.metadata.);
 }
 
 // Call the main function and catch if there is any error
