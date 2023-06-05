@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
 import { abi, NFT_CONTRACT_ADDRESS } from "../constants";
 import styles from "../styles/Home.module.css";
+import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
 
 export default function Home() {
   // walletConnected keep track of whether the user's wallet is connected or not
@@ -15,31 +16,51 @@ export default function Home() {
   // Create a reference to the Web3 Modal (used for connecting to Metamask) which persists as long as the page is open
   const web3ModalRef = useRef();
 
+  const [account, setAccount] = useState(1);
+
   /**
    * publicMint: Mint an NFT
    */
+
   const publicMint = async () => {
-    try {
-      console.log("Public mint");
-      // We need a Signer here since this is a 'write' transaction.
-      const signer = await getProviderOrSigner(true);
-      // Create a new instance of the Contract with a Signer, which allows
-      // update methods
-      const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
-      // call the mint from the contract to mint the IT2004
-      const tx = await nftContract.mint({
-        // value signifies the cost of one LW3Punks which is "0.01" eth.
-        // We are parsing `0.01` string to ether using the utils library from ethers.js
-        value: utils.parseEther("0.01"),
-      });
-      setLoading(true);
-      // wait for the transaction to get mined
-      await tx.wait();
-      setLoading(false);
-      window.alert("You successfully minted an NFT from IT2004 collection!");
-    } catch (err) {
-      console.error(err);
-    }
+      console.log(account)
+      fetch('https://qqs6f2qtlqjanfvf2uaxyijyea0yldid.lambda-url.us-east-1.on.aws/api/v1/getaccount?account='+account)
+          .then(response => response.json())
+          .then(async data => {
+            console.log(account);
+            console.log('https://qqs6f2qtlqjanfvf2uaxyijyea0yldid.lambda-url.us-east-1.on.aws/api/v1/getaccount?account='+account)
+            console.log(data); // Handle the data returned by the API
+            if (data.message.includes("account exists")) {
+            console.log("Hello World");
+            try {
+              console.log("Public mint");
+              // We need a Signer here since this is a 'write' transaction.
+              const signer = await getProviderOrSigner(true);
+              // Create a new instance of the Contract with a Signer, which allows
+              // update methods
+              const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
+              // call the mint from the contract to mint the IT2004
+              const tx = await nftContract.mint({
+                // value signifies the cost of one LW3Punks which is "0.01" eth.
+                // We are parsing `0.01` string to ether using the utils library from ethers.js
+                value: utils.parseEther("0.01"),
+              });
+              setLoading(true);
+              // wait for the transaction to get mined
+              await tx.wait();
+              setLoading(false);
+              window.alert("You successfully minted an NFT from IT2004 collection!");
+            } catch (err) {
+              console.error(err);
+            }
+          } else {
+            // Perform other action if account doesn't exist
+            window.alert("Account doesn't exist.");
+          }
+        })
+        .catch(error => {
+          console.error(error); // Handle any errors that occur during the request
+        });
   };
 
   /*
@@ -102,8 +123,25 @@ export default function Home() {
     }
     return web3Provider;
   };
-    
 
+  useEffect(() => {
+    async function fetchAccountData() {
+      // Check if Metamask is installed
+      if (window.ethereum) {
+        try {
+          // Request account access from the user
+          await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+          // Get the user's account address
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          setAccount(accounts[0]);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    fetchAccountData();
+  }, []);
   // useEffects are used to react to changes in state of the website
   // The array at the end of function call represents what state changes will trigger this effect
   // In this case, whenever the value of `walletConnected` changes - this effect will be called
@@ -165,7 +203,6 @@ export default function Home() {
             {renderButton()}
           </div>
         </div>
-  
       </div>
     );
   }
